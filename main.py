@@ -43,7 +43,7 @@ def janken():
                     raise ValueError
                 break
             except ValueError:
-                print('0, 1, 2のいずれかを入力してください。')
+                print(f'{list(hands.keys())}のいずれかを入力してください。')
 
         # コンピュータの手を選択
         cpu_hand = random.choice(list(hands.keys()))
@@ -66,12 +66,8 @@ def judge(user, cpu):
     """勝敗を判定する関数"""
     if user == cpu:
         return "あいこ"
-    elif user == 0 and cpu == 1:
-        return "勝ち"
-    elif user == 1 and cpu == 2:
-        return "勝ち"
-    elif user == 2 and cpu == 0:
-        return "勝ち"
+    elif any([user == 0 and cpu == 1, user == 1 and cpu == 2, user == 2 and cpu == 0]):
+        return "勝ち！"
     else:
         return "負け"
 
