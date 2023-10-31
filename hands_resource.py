@@ -25,17 +25,26 @@ scissors_aa = '''
 ---.__(___)
 '''
 
+
+class Hand:
+    def __init__(self, name, art):
+        self.name = name
+        self.art = art
+
+
+rock = Hand('グー', rock_aa)
+paper = Hand('パー', paper_aa)
+scissors = Hand('チョキ', scissors_aa)
+
 hands_asset = {
-    'g': {
-        'name': 'グー',
-        'art': rock_aa,
-    },
-    'c': {
-        'name': 'チョキ',
-        'art': scissors_aa,
-    },
-    'p': {
-        'name': 'パー',
-        'art': paper_aa,
-    },
+    'g': rock,
+    'c': scissors,
+    'p': paper
+}
+
+winning_combinations = {
+    # 勝ち手: 負け手
+    rock.name: scissors.name,
+    scissors.name: paper.name,
+    paper.name: rock.name
 }
