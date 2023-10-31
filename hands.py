@@ -35,16 +35,3 @@ class Hand:
 rock = Hand('グー', rock_aa)
 paper = Hand('パー', paper_aa)
 scissors = Hand('チョキ', scissors_aa)
-
-hands_asset = {
-    'g': rock,
-    'c': scissors,
-    'p': paper
-}
-
-winning_combinations = {
-    # 勝ち手: 負け手
-    rock.name: scissors.name,
-    scissors.name: paper.name,
-    paper.name: rock.name
-}

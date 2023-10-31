@@ -1,7 +1,14 @@
 import random
 
-from hands import hands_asset
+from hands import rock, paper, scissors
 from score import Score
+
+# プレイヤーが出せる手
+hands_asset = {
+    'g': rock,
+    'c': scissors,
+    'p': paper
+}
 
 
 class Player:

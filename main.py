@@ -1,5 +1,13 @@
 import player
-from hands import winning_combinations
+from hands import rock, paper, scissors
+
+# 勝敗の組み合わせ
+winning_combinations = {
+    # 勝ち手: 負け手
+    rock.name: scissors.name,
+    scissors.name: paper.name,
+    paper.name: rock.name
+}
 
 
 def play_game():
@@ -28,6 +36,10 @@ def play_game():
             break
 
 
+def is_user_win(user_hand_name, computer_hand_name):
+    return winning_combinations[user_hand_name] == computer_hand_name
+
+
 def judge(user, cpu):
     """
     じゃんけんの勝敗を判定する関数
@@ -39,7 +51,7 @@ def judge(user, cpu):
     if user.hand == cpu.hand:
         user.score.increment_draw()
         return "あいこ"
-    elif winning_combinations[user.hand.name] == cpu.hand.name:
+    elif is_user_win(user.hand.name, cpu.hand.name):
         user.score.increment_win()
         return "勝ち！"
     else:
