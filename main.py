@@ -2,7 +2,7 @@ import player
 from hands import winning_combinations
 
 
-def janken():
+def play_game():
     """じゃんけんを実行する関数"""
 
     user = player.User()
@@ -49,4 +49,4 @@ def judge(user, cpu):
 
 # じゃんけんを実行
 if __name__ == '__main__':
-    janken()
+    play_game()
