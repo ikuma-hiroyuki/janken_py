@@ -1,6 +1,7 @@
 import random
 
 from hands import hands_asset
+from score import Score
 
 
 class Player:
@@ -12,6 +13,10 @@ class Player:
 
 
 class User(Player):
+    def __init__(self):
+        super().__init__()
+        self.score = Score()
+
     def choice_hand(self):
         """
         ユーザーの手を選択するためのメソッド。

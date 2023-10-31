@@ -1,12 +1,10 @@
 import player
-from score import Score
 from hands import winning_combinations
 
 
 def janken():
     """じゃんけんを実行する関数"""
 
-    score = Score()
     user = player.User()
     cpu = player.CPU()
 
@@ -20,33 +18,32 @@ def janken():
         print(f'コンピュータ: {cpu.hand.art}')
 
         # 勝敗を表示
-        result = judge(user, cpu, score)
+        result = judge(user, cpu)
         print(f"{result}\n")
 
-        replay = input('もう一度勝負しますか (勝負する場合は y ): ').lower()
+        replay = input('もう一度勝負しますか？ (勝負する場合は y ): ').lower()
         if replay != 'y':
-            score.show()
+            user.score.show()
             print('またね！')
             break
 
 
-def judge(user, cpu, score):
+def judge(user, cpu):
     """
     じゃんけんの勝敗を判定する関数
-    :param user: ユーザーの手
-    :param cpu: コンピュータの手
-    :param score: 勝敗の記録
+    :param user: ユーザーのインスタンス
+    :param cpu: コンピュータのインスタンス
     :return: 勝敗の結果
     """
 
     if user.hand == cpu.hand:
-        score.increment_draw()
+        user.score.increment_draw()
         return "あいこ"
     elif winning_combinations[user.hand.name] == cpu.hand.name:
-        score.increment_win()
+        user.score.increment_win()
         return "勝ち！"
     else:
-        score.increment_loss()
+        user.score.increment_loss()
         return "負け"
 
 
