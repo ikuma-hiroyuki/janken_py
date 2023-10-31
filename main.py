@@ -1,50 +1,65 @@
 import random
 
-from hands import rock, scissors, paper
+from hands import hands
+from score import Score
 
-hands_aa = {0: rock, 1: scissors, 2: paper}
+
+def input_user_hand_number():
+    """ユーザーの手を入力させる関数"""
+
+    print("あなたの手をアルファベットで入力してください。\n")
+    explanation = [f'{key}: {value["name"]}\n' for key, value in hands.items()]
+    while True:
+        user_hand = input(f'じゃんけん！\n{"".join(explanation)}').lower()
+        all_hands = list(hands.keys())
+        if user_hand not in all_hands:
+            print(f'{" ".join(all_hands)} のいずれかを入力してください。\n')
+            continue
+        return user_hand
 
 
 def janken():
     """じゃんけんを実行する関数"""
-    while True:
-        hands = {0: 'グー', 1: 'チョキ', 2: 'パー'}
 
+    score = Score()
+    while True:
         # 手を選択
-        while True:
-            user_hand = input(f'じゃんけん！ {str(hands)}: ')
-            try:
-                user_hand = int(user_hand)
-                if user_hand not in hands.keys():
-                    raise ValueError
-                break
-            except ValueError:
-                print(f'{list(hands.keys())}のいずれかを入力してください。')
+        user_hand = input_user_hand_number()
 
         # コンピュータの手を選択
         cpu_hand = random.choice(list(hands.keys()))
 
         # 手を表示
-        print(f'あなた: {hands_aa[user_hand]}')
-        print(f'コンピュータ: {hands_aa[cpu_hand]}')
+        print(f'あなた: {hands[user_hand]["art"]}')
+        print(f'コンピュータ: {hands[cpu_hand]["art"]}')
 
         # 勝敗を表示
-        result = judge(user_hand, cpu_hand)
+        result = judge(user_hand, cpu_hand, score)
         print(f"{result}\n")
 
         replay = input('もう一度勝負しますか (勝負する場合は y ): ').lower()
         if replay != 'y':
+            score.show()
             print('またね！')
             break
 
 
-def judge(user, cpu):
-    """勝敗を判定する関数"""
+def judge(user, cpu, score):
+    """
+    じゃんけんの勝敗を判定する関数
+    :param user: ユーザーの手
+    :param cpu: コンピュータの手
+    :param score: 勝敗の記録
+    """
+
     if user == cpu:
+        score.increment_draw()
         return "あいこ"
-    elif any([user == 0 and cpu == 1, user == 1 and cpu == 2, user == 2 and cpu == 0]):
+    elif any([user == 'g' and cpu == 'c', user == 'c' and cpu == 'p', user == 'p' and cpu == 'g']):
+        score.increment_win()
         return "勝ち！"
     else:
+        score.increment_loss()
         return "負け"
 
 
