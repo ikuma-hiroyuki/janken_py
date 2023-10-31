@@ -43,7 +43,7 @@ def judge(user, cpu):
         user.score.increment_win()
         return "勝ち！"
     else:
-        user.score.increment_loss()
+        user.score.increment_lose()
         return "負け"
 
 
