@@ -29,7 +29,7 @@ class User(Player):
         while choice not in hands_asset:
             choice = input(f'じゃんけん！\n{choices}').lower()
             if choice not in hands_asset:
-                print(f'{" ".join(hands_asset.keys())} のいずれかを入力してください。\n')
+                print(f'{" ".join(hands_asset)} のいずれかを入力してください。\n')
         self.hand = hands_asset[choice]
 
 
