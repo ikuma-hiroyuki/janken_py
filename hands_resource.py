@@ -25,7 +25,7 @@ scissors_aa = '''
 ---.__(___)
 '''
 
-hands = {
+hands_asset = {
     'g': {
         'name': 'グー',
         'art': rock_aa,

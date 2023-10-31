@@ -1,6 +1,6 @@
 import random
 
-from hands import hands
+from hands_resource import hands_asset
 from score import Score
 
 
@@ -8,10 +8,10 @@ def input_user_hand_number():
     """ユーザーの手を入力させる関数"""
 
     print("あなたの手をアルファベットで入力してください。\n")
-    explanation = [f'{key}: {value["name"]}\n' for key, value in hands.items()]
+    explanation = [f'{key}: {value["name"]}\n' for key, value in hands_asset.items()]
     while True:
         user_hand = input(f'じゃんけん！\n{"".join(explanation)}').lower()
-        all_hands = list(hands.keys())
+        all_hands = list(hands_asset.keys())
         if user_hand not in all_hands:
             print(f'{" ".join(all_hands)} のいずれかを入力してください。\n')
             continue
@@ -27,11 +27,11 @@ def janken():
         user_hand = input_user_hand_number()
 
         # コンピュータの手を選択
-        cpu_hand = random.choice(list(hands.keys()))
+        cpu_hand = random.choice(list(hands_asset.keys()))
 
         # 手を表示
-        print(f'あなた: {hands[user_hand]["art"]}')
-        print(f'コンピュータ: {hands[cpu_hand]["art"]}')
+        print(f'あなた: {hands_asset[user_hand]["art"]}')
+        print(f'コンピュータ: {hands_asset[cpu_hand]["art"]}')
 
         # 勝敗を表示
         result = judge(user_hand, cpu_hand, score)
