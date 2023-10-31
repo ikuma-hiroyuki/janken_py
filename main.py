@@ -1,40 +1,26 @@
-import random
-
-from hands_resource import hands_asset
+import player
 from score import Score
-
-
-def input_user_hand_number():
-    """ユーザーの手を入力させる関数"""
-
-    print("あなたの手をアルファベットで入力してください。\n")
-    explanation = [f'{key}: {value["name"]}\n' for key, value in hands_asset.items()]
-    while True:
-        user_hand = input(f'じゃんけん！\n{"".join(explanation)}').lower()
-        all_hands = list(hands_asset.keys())
-        if user_hand not in all_hands:
-            print(f'{" ".join(all_hands)} のいずれかを入力してください。\n')
-            continue
-        return user_hand
+from hands_resource import winning_combinations
 
 
 def janken():
     """じゃんけんを実行する関数"""
 
     score = Score()
+    user = player.User()
+    cpu = player.CPU()
+
     while True:
         # 手を選択
-        user_hand = input_user_hand_number()
-
-        # コンピュータの手を選択
-        cpu_hand = random.choice(list(hands_asset.keys()))
+        user.choice_hand()
+        cpu.choice_hand()
 
         # 手を表示
-        print(f'あなた: {hands_asset[user_hand]["art"]}')
-        print(f'コンピュータ: {hands_asset[cpu_hand]["art"]}')
+        print(f'あなた: {user.hand.art}')
+        print(f'コンピュータ: {cpu.hand.art}')
 
         # 勝敗を表示
-        result = judge(user_hand, cpu_hand, score)
+        result = judge(user, cpu, score)
         print(f"{result}\n")
 
         replay = input('もう一度勝負しますか (勝負する場合は y ): ').lower()
@@ -50,12 +36,13 @@ def judge(user, cpu, score):
     :param user: ユーザーの手
     :param cpu: コンピュータの手
     :param score: 勝敗の記録
+    :return: 勝敗の結果
     """
 
-    if user == cpu:
+    if user.hand == cpu.hand:
         score.increment_draw()
         return "あいこ"
-    elif any([user == 'g' and cpu == 'c', user == 'c' and cpu == 'p', user == 'p' and cpu == 'g']):
+    elif winning_combinations[user.hand.name] == cpu.hand.name:
         score.increment_win()
         return "勝ち！"
     else:
