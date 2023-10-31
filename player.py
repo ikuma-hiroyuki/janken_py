@@ -1,6 +1,6 @@
 import random
 
-from hands_resource import hands_asset
+from hands import hands_asset
 
 
 class Player:

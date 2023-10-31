@@ -1,6 +1,6 @@
 import player
 from score import Score
-from hands_resource import winning_combinations
+from hands import winning_combinations
 
 
 def janken():
