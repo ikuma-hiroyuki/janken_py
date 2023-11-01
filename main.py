@@ -1,13 +1,5 @@
 import player
-from hands import rock, paper, scissors
-
-# 勝敗の組み合わせ
-winning_combinations = {
-    # 勝ち手: 負け手
-    rock.name: scissors.name,
-    scissors.name: paper.name,
-    paper.name: rock.name
-}
+from referee import Referee
 
 
 def play_game():
@@ -15,48 +7,32 @@ def play_game():
 
     user = player.User()
     cpu = player.CPU()
+    referee = Referee()
 
     while True:
-        # 手を選択
-        user.choice_hand()
-        cpu.choice_hand()
+        print("\nじゃんけん！")
 
-        # 手を表示
-        print(f'あなた: {user.hand.art}')
-        print(f'コンピュータ: {cpu.hand.art}')
+        # 決着がつくまで繰り返す
+        while not referee.game_decided:
+            user.choice_hand()
+            cpu.choice_hand()
 
-        # 勝敗を表示
-        result = judge(user, cpu)
-        print(f"{result}\n")
+            # 手を表示
+            print(f'あなた: {user.hand.art}')
+            print(f'コンピュータ: {cpu.hand.art}')
 
-        replay = input('もう一度勝負しますか？ (勝負する場合は y ): ').lower()
-        if replay != 'y':
+            # 勝敗を表示
+            referee.judge(user, cpu)
+            print(f"{referee.judgment}\n")
+
+        is_replay = input('再戦する場合は何か入力してエンターキーを押してください: ').lower()
+
+        if not is_replay:
             user.score.show()
             print('またね！')
             break
-
-
-def is_user_win(user_hand_name, computer_hand_name):
-    return winning_combinations[user_hand_name] == computer_hand_name
-
-
-def judge(user, cpu):
-    """
-    じゃんけんの勝敗を判定する関数
-    :param user: ユーザーのインスタンス
-    :param cpu: コンピュータのインスタンス
-    :return: 勝敗の結果
-    """
-
-    if user.hand == cpu.hand:
-        user.score.increment_draw()
-        return "あいこ"
-    elif is_user_win(user.hand.name, cpu.hand.name):
-        user.score.increment_win()
-        return "勝ち！"
-    else:
-        user.score.increment_lose()
-        return "負け"
+        else:
+            referee.game_decided = False
 
 
 # じゃんけんを実行
