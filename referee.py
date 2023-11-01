@@ -7,18 +7,18 @@ class Referee:
     # 勝敗の組み合わせ
     winning_combinations = {
         # 勝ち手: 負け手
-        rock.name: scissors.name,
-        scissors.name: paper.name,
-        paper.name: rock.name
+        rock: scissors,
+        scissors: paper,
+        paper: rock
     }
 
     def __init__(self):
         self.game_decided = False
         self.judgment_result = ""
 
-    @staticmethod
-    def _is_user_win(user_hand_name, computer_hand_name):
-        return Referee.winning_combinations[user_hand_name] == computer_hand_name
+    @classmethod
+    def _is_user_win(cls, user_hand, computer_hand):
+        return cls.winning_combinations[user_hand] == computer_hand
 
     def evaluate_judge(self, user, cpu):
         """
@@ -32,7 +32,7 @@ class Referee:
             user.score.increment_draw()
             self.game_decided = False
             self.judgment_result = "あいこ"
-        elif Referee._is_user_win(user.hand.name, cpu.hand.name):
+        elif self._is_user_win(user.hand, cpu.hand):
             user.score.increment_win()
             self.game_decided = True
             self.judgment_result = "勝ち！"
