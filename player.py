@@ -1,25 +1,30 @@
+from abc import ABC, abstractmethod
 import random
 
 from hands import rock, paper, scissors
 from score import Score
 
-# プレイヤーが出せる手
-hands_asset = {
+# プレイヤーの選択肢
+CHOICES = {
     'g': rock,
     'c': scissors,
     'p': paper
 }
 
 
-class Player:
+class Player(ABC):
+    """プレイヤーの基底クラス"""
     def __init__(self):
         self.hand = None  # Hand クラスのインスタンス
 
+    @abstractmethod
     def choice_hand(self):
+        """プレイヤーの手を選択するための抽象メソッド"""
         pass
 
 
 class User(Player):
+    """ユーザーのクラス"""
     def __init__(self):
         print("あなたの手をアルファベットで入力してください。")
         super().__init__()
@@ -28,19 +33,22 @@ class User(Player):
     def choice_hand(self):
         """
         ユーザーの手を選択するためのメソッド。
-        ユーザーに手を入力してもらい、妥当な手が選択されるまでループします。
+        ユーザーに手を入力してもらい、妥当な手が選択されるまでループする。
         """
 
-        choices = "".join(f'{key}: {hand.name}\n' for key, hand in hands_asset.items())
+        choices = "".join(f'{key}: {hand.name}\n' for key, hand in CHOICES.items())
         choice = ''
-        while choice not in hands_asset:
+        while choice not in CHOICES:
             choice = input(f'{choices}').lower()
-            if choice not in hands_asset:
-                print(f'{" ".join(hands_asset)} のいずれかを入力してください。\n')
-        self.hand = hands_asset[choice]
+            if choice not in CHOICES:
+                print(f'{" ".join(CHOICES)} のいずれかを入力してください。\n')
+        self.hand = CHOICES[choice]
 
 
 class CPU(Player):
+    """コンピュータのクラス"""
+
     def choice_hand(self):
         """ コンピュータの手をランダムに選択するためのメソッド。 """
-        self.hand = random.choice(list(hands_asset.values()))
+
+        self.hand = random.choice(list(CHOICES.values()))
