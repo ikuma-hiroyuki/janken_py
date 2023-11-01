@@ -29,7 +29,6 @@ class Referee:
         """
 
         if user.hand == cpu.hand:
-            user.score.increment_draw()
             self.game_decided = False
             self.judgment_result = "あいこ"
         elif self._is_user_win(user.hand, cpu.hand):
