@@ -25,8 +25,7 @@ def play_game():
             referee.evaluate_judge(user, cpu)
             print(f"{referee.judgment_result}\n")
 
-        is_replay = input('再戦する場合は何か入力してエンターキーを押してください: ').lower()
-
+        is_replay = input('再戦する場合は何か入力してエンターキーを押してください: ')
         if not is_replay:
             user.score.show()
             print('またね！')
