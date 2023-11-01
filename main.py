@@ -21,9 +21,9 @@ def play_game():
             print(f'あなた: {user.hand.art}')
             print(f'コンピュータ: {cpu.hand.art}')
 
-            # 勝敗を表示
-            referee.judge(user, cpu)
-            print(f"{referee.judgment}\n")
+            # 勝敗を判定して表示
+            referee.evaluate_judge(user, cpu)
+            print(f"{referee.judgment_result}\n")
 
         is_replay = input('再戦する場合は何か入力してエンターキーを押してください: ').lower()
 

@@ -14,13 +14,13 @@ class Referee:
 
     def __init__(self):
         self.game_decided = False
-        self.judgment = ""
+        self.judgment_result = ""
 
     @staticmethod
     def _is_user_win(user_hand_name, computer_hand_name):
         return Referee.winning_combinations[user_hand_name] == computer_hand_name
 
-    def judge(self, user, cpu):
+    def evaluate_judge(self, user, cpu):
         """
         じゃんけんの勝敗を判定する
         :param user: ユーザーのインスタンス
@@ -31,12 +31,12 @@ class Referee:
         if user.hand == cpu.hand:
             user.score.increment_draw()
             self.game_decided = False
-            self.judgment = "あいこ"
+            self.judgment_result = "あいこ"
         elif Referee._is_user_win(user.hand.name, cpu.hand.name):
             user.score.increment_win()
             self.game_decided = True
-            self.judgment = "勝ち！"
+            self.judgment_result = "勝ち！"
         else:
             user.score.increment_lose()
             self.game_decided = True
-            self.judgment = "負け"
+            self.judgment_result = "負け"
