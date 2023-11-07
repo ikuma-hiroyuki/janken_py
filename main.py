@@ -2,6 +2,12 @@ from player import User, CPU
 from referee import Referee
 
 
+def graceful_exit(user: User):
+    print("ゲームを終了します。")
+    user.score.show()
+    exit()
+
+
 def is_user_replay_decision():
     """ユーザーに再戦するかどうか尋ねる関数"""
     return bool(input('再戦する場合は何か入力してエンターキーを押してください: '))
@@ -40,7 +46,10 @@ def play_game():
     cpu = CPU()
     referee = Referee()
 
-    play_rounds(user, cpu, referee)
+    try:
+        play_rounds(user, cpu, referee)
+    except KeyboardInterrupt:
+        graceful_exit(user)
 
     user.score.show()
     print('またね！')
