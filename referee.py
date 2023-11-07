@@ -39,3 +39,8 @@ class Referee:
             user.score.increment_lose()
             self.game_decided = True
             self.judgment_result = "負け"
+
+    def reset_game(self):
+        """ゲームをリセットする"""
+        self.game_decided = False
+        self.judgment_result = ""
