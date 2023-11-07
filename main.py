@@ -21,7 +21,7 @@ def print_results(user, cpu, referee):
 
 
 def round_of_game(user, cpu, referee):
-    """ゲームの一回戦を実行する関数"""
+    """じゃんけんを一回実行する関数"""
     user.choice_hand()
     cpu.choice_hand()
     referee.evaluate_judge(user, cpu)
