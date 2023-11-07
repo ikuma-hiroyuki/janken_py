@@ -1,37 +1,49 @@
-import player
+from player import User, CPU
 from referee import Referee
+
+
+def get_user_replay_decision():
+    """ユーザーに再戦するかどうか尋ねる関数"""
+    return input('再戦する場合は何か入力してエンターキーを押してください: ')
+
+
+def print_results(user, cpu, referee):
+    """結果を表示する関数"""
+    print(f'あなた: {user.hand.art}')
+    print(f'コンピュータ: {cpu.hand.art}')
+    print(f"{referee.judgment_result}\n")
+
+
+def round_of_game(user, cpu, referee):
+    """ゲームの一回戦を実行する関数"""
+    user.choice_hand()
+    cpu.choice_hand()
+    referee.evaluate_judge(user, cpu)
+    print_results(user, cpu, referee)
+
+
+def play_rounds(user, cpu, referee):
+    """じゃんけんの各ラウンドをプレイする関数"""
+    while True:
+        print("\nじゃんけん！")
+        # 決着がつくまで繰り返す
+        while not referee.game_decided:
+            round_of_game(user, cpu, referee)
+        if not get_user_replay_decision():
+            break
+        referee.reset_game()
 
 
 def play_game():
     """じゃんけんを実行する関数"""
-
-    user = player.User()
-    cpu = player.CPU()
+    user = User()
+    cpu = CPU()
     referee = Referee()
 
-    while True:
-        print("\nじゃんけん！")
+    play_rounds(user, cpu, referee)
 
-        # 決着がつくまで繰り返す
-        while not referee.game_decided:
-            user.choice_hand()
-            cpu.choice_hand()
-
-            # 手を表示
-            print(f'あなた: {user.hand.art}')
-            print(f'コンピュータ: {cpu.hand.art}')
-
-            # 勝敗を判定して表示
-            referee.evaluate_judge(user, cpu)
-            print(f"{referee.judgment_result}\n")
-
-        is_replay = input('再戦する場合は何か入力してエンターキーを押してください: ')
-        if not is_replay:
-            user.score.show()
-            print('またね！')
-            break
-        else:
-            referee.game_decided = False
+    user.score.show()
+    print('またね！')
 
 
 # じゃんけんを実行
