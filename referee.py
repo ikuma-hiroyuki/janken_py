@@ -1,4 +1,5 @@
 from hands import rock, paper, scissors
+from player import User, CPU
 
 
 class Referee:
@@ -20,7 +21,7 @@ class Referee:
     def _is_user_win(cls, user_hand, computer_hand):
         return cls.winning_combinations[user_hand] == computer_hand
 
-    def evaluate_judge(self, user, cpu):
+    def evaluate_judge(self, user: User, cpu: CPU):
         """
         じゃんけんの勝敗を判定する
         :param user: ユーザーのインスタンス
