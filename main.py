@@ -2,9 +2,9 @@ from player import User, CPU
 from referee import Referee
 
 
-def get_user_replay_decision():
+def is_user_replay_decision():
     """ユーザーに再戦するかどうか尋ねる関数"""
-    return input('再戦する場合は何か入力してエンターキーを押してください: ')
+    return bool(input('再戦する場合は何か入力してエンターキーを押してください: '))
 
 
 def print_results(user, cpu, referee):
@@ -29,7 +29,7 @@ def play_rounds(user, cpu, referee):
         # 決着がつくまで繰り返す
         while not referee.game_decided:
             round_of_game(user, cpu, referee)
-        if not get_user_replay_decision():
+        if not is_user_replay_decision():
             break
         referee.reset_game()
 
